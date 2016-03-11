@@ -22,24 +22,31 @@ class KnightPathFinder
     possible_moves.map {|d_row, d_col| [d_row + row, d_col + col]  }
   end
 
-  # def self.valid_moves(pos)
-  #   possible_moves = []
-  #   row, col = pos
-  #   DELTAS.each do |delta|
-  #     d_row, d_col = delta
-  #     possible_move = [row + d_row, col + d_col]
-  #     possible_moves << possible_move if valid_pos?(possible_move)
-  #   end
-  #   possible_moves
-  # end
-  #
-  # def self.valid_pos?(pos)
-  #   row, col = pos
-  #   row.between?(0,7) && col.between?(0,7)
-  # end
-
   def initialize(pos = [0, 0])
+    @initial_pos = pos
+    @visited_pos = [pos]
+  end
 
+  def new_move_positions(pos)
+    KnightPathFinder.valid_moves(pos).reject do |move|
+      @visited_pos.include?(move)
+    end
   end
 
 end
+
+# def self.valid_moves(pos)
+#   possible_moves = []
+#   row, col = pos
+#   DELTAS.each do |delta|
+#     d_row, d_col = delta
+#     possible_move = [row + d_row, col + d_col]
+#     possible_moves << possible_move if valid_pos?(possible_move)
+#   end
+#   possible_moves
+# end
+#
+# def self.valid_pos?(pos)
+#   row, col = pos
+#   row.between?(0,7) && col.between?(0,7)
+# end
