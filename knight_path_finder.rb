@@ -22,15 +22,19 @@ class KnightPathFinder
     possible_moves.map {|d_row, d_col| [d_row + row, d_col + col]  }
   end
 
+  attr_reader :visited_positions
+
   def initialize(pos = [0, 0])
     @initial_pos = pos
-    @visited_pos = [pos]
+    @visited_positions = [pos]
   end
 
   def new_move_positions(pos)
-    KnightPathFinder.valid_moves(pos).reject do |move|
-      @visited_pos.include?(move)
+    new_moves = KnightPathFinder.valid_moves(pos).reject do |move|
+      @visited_positions.include?(move)
     end
+    @visited_positions += new_moves
+    new_moves
   end
 
 end
