@@ -1,3 +1,4 @@
+require 'byebug'
 require_relative 'poly_tree_node'
 
 class KnightPathFinder
@@ -37,7 +38,35 @@ class KnightPathFinder
     new_moves
   end
 
+  def build_move_tree
+    root = PolyTreeNode.new(@initial_pos)
+
+    queue = [root]
+
+    until queue.empty?
+      node = queue.shift
+      new_move_positions(node.value).each do |pos|
+        new_child = PolyTreeNode.new(pos)
+        node.add_child(new_child)
+        queue << new_child
+      end
+    end
+    root
+  end
+
+
 end
+
+game = KnightPathFinder.new
+root = game.build_move_tree
+
+
+
+
+  # def build_move_tree
+  #   root = PolyTreeNode.new(@initial_pos)
+  # end
+
 
 # def self.valid_moves(pos)
 #   possible_moves = []

@@ -50,7 +50,7 @@ end
   end
 
   def dfs(target_value)
-    return self if value == target_value
+    return self if self.value == target_value
     children.each do |child|
       #Rather than making two recursive calls, we save the return value of the recursive call in a variable, and then (do stuff) with that variable.
        result = child.dfs(target_value)
