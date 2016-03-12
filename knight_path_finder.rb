@@ -27,7 +27,7 @@ class KnightPathFinder
 
   def initialize(pos = [0, 0])
     @initial_pos = pos
-    @visited_positions = [pos]
+    @visited_positions = [@initial_pos]
   end
 
   def new_move_positions(pos)
@@ -40,7 +40,7 @@ class KnightPathFinder
 
   def build_move_tree
     root = PolyTreeNode.new(@initial_pos)
-
+    @visited_positions = [@initial_pos]
     queue = [root]
 
     until queue.empty?
@@ -54,11 +54,32 @@ class KnightPathFinder
     root
   end
 
+  def find_path(end_pos)
+    root = build_move_tree
+    end_node = root.dfs(end_pos)
+    trace_path_back(end_node)
+  end
+
+  def trace_path_back(end_node)
+    path = [end_node.value]
+    parent = end_node.parent
+
+    until parent.nil?
+      path << parent.value
+      parent = parent.parent
+    end
+
+    path.reverse
+
+  end
 
 end
 
 game = KnightPathFinder.new
-root = game.build_move_tree
+
+p game.find_path([7, 6])
+p game.find_path([6, 2])
+
 
 
 
